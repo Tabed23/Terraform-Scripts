@@ -1,6 +1,6 @@
 resource "aws_iam_role" "eks_cluster" {
   # The name of the role
-  name = "FitScrypt-EKS-Role"
+  name = "EKS-Role"
 
   assume_role_policy = <<POLICY
 {
@@ -27,7 +27,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
 
 resource "aws_eks_cluster" "eks" {
   # Name of the cluster.
-  name     = "FitScrypt"
+  name     = "your cluster name"
   role_arn = aws_iam_role.eks_cluster.arn
   version  = "1.21"
 
