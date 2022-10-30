@@ -1,0 +1,7 @@
+Inside the cloudcents-terraform
+need to have one module to build the 
+rancher UI
+global cluster
+infrastructure
+
+all these 3 items will depend on the region
