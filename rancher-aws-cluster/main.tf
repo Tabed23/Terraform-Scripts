@@ -28,7 +28,8 @@ module "cluster" {
   ec2                  = var.ec2_type
   public               = module.vpc.public_subnets
   private              = module.vpc.private_subnets
-  ec2_sg               = module.vpc.sg
+  bbastion_sg          = module.vpc.bastion_sg
+  local_public_key     = var.rsa_public_key
 }
 
 module "rke" {

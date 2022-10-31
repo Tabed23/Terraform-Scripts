@@ -11,6 +11,8 @@ variable "private" {
   
 }
 
-variable "ec2_sg" {
+variable "bastion_sg" {
   
 }
+
+variable "local_public_key" {}

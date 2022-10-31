@@ -32,3 +32,5 @@ variable "private_subnets_cidr" {
 variable "ec2_type" {
   type = string
 }
+
+variable "rsa_public_key" {}
