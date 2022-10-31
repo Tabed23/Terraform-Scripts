@@ -7,7 +7,7 @@ resource "aws_instance" "bastion_host" {
   key_name = aws_key_pair.ssh_key.key_name
   user_data= file("./bastion_host.sh") 
   tags = {
-      Name= "${var.name_of_instance}-web-server"
+      Name= "bastion_host"
     }
 } 
  

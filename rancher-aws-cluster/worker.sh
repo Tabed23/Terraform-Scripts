@@ -11,8 +11,13 @@ sudo apt install jq
 sudo apt update
 sudo apt install zip
 sudo apt install unzip
-sudo unzip awscliv2.zip
-sudo ./aws/install
+
+sudo wget https://github.com/mikefarah/yq/releases/download/v4.12.0/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
+
+
+sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+sudo swapoff -a
+
 
 #DOCKER
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/docker-archive-keyring.gpg
