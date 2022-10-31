@@ -28,9 +28,14 @@ variable "private_subnets_cidr" {
   type = list(string)
 }
 
-
-variable "ec2_type" {
+variable "keyname" {}
+variable "instance_type" {
   type = string
 }
 
+
 variable "rsa_public_key" {}
+
+variable "worker_instance_type" {}
+
+variable "no_of_worker_nodes" {}
