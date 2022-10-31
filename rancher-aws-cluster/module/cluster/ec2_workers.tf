@@ -10,11 +10,13 @@ resource "aws_instance" "worker_nodes" {
   vpc_security_group_ids= [var.ec2sg]  
 
   availability_zone = var.availability_zones
-
-  key_name = aws_key_pair.ssh_key.key_name
   
+  key_name = aws_key_pair.rsa_key.key_name
+
   user_data= file("./worker.sh") 
+
   tags = {
+    
       Name= "worker_nodes-${count.index}"
     }
 } 

@@ -34,8 +34,6 @@ variable "instance_type" {
 }
 
 
-variable "rsa_public_key" {}
-
 variable "worker_instance_type" {}
 
 variable "no_of_worker_nodes" {}

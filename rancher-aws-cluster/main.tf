@@ -31,18 +31,17 @@ module "vpc" {
 }
 module "cluster" {
   source               = "./module/cluster"
-  instance_type        =  var.instance_type
-  public_subnet_id     =  module.vpc.public_subnets[0].id
-  private_subnet_id    =  module.vpc.private_subnets[0].id
-  ec2sg                =  module.vpc.bastion_sg
-  availability_zones   =  data.aws_availability_zones.available.names[0]
+  instance_type        = var.instance_type
+  public_subnet_id     = module.vpc.public_subnets[0].id
+  private_subnet_id    = module.vpc.private_subnets[0].id
+  ec2sg                = module.vpc.bastion_sg
+  availability_zones   = data.aws_availability_zones.available.names[0]
   keyname              = var.keyname
-  local_public_key     =  var.rsa_public_key
-  worker_instance_type =  var.worker_instance_type
-  no_of_worker_nodes   =  var.no_of_worker_nodes
+  worker_instance_type = var.worker_instance_type
+  no_of_worker_nodes   = var.no_of_worker_nodes
 }
 
 # module "rke" {
 #   source = "./module/rke"
-  
+
 # }

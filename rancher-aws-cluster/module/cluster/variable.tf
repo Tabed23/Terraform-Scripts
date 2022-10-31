@@ -12,7 +12,6 @@ variable "availability_zones" {}
 
 variable "keyname" {}
 
-variable "local_public_key" {}
 
 variable "worker_instance_type" {}
 

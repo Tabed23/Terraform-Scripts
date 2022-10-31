@@ -9,17 +9,10 @@ resource "aws_instance" "bastion_host" {
   
   availability_zone = var.availability_zones
 
-  key_name = aws_key_pair.ssh_key.key_name
+  key_name = aws_key_pair.rsa_key.key_name
   
-  user_data= file("./bastion_host.sh") 
+  user_data= file("./bastion_host.sh")
   tags = {
       Name= "bastion_host"
     }
 } 
- 
-resource "aws_key_pair" "ssh_key" {
-  key_name = var.keyname
-  
-  public_key= file(var.local_public_key)
-} 
- 
