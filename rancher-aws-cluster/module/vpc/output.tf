@@ -10,6 +10,6 @@ output "private_subnets" {
   value = aws_subnet.private[*].cidr_block
 }
 
- output "bastion_sg" {
+output "bastion_sg" {
     value= "${aws_security_group.ssh-http-sg.id}"
-} 
+}

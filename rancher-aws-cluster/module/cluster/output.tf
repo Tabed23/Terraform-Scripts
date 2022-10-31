@@ -20,5 +20,5 @@ output "ami_ubuntu" {
 }
 
 output "public-ip_of_instance" {
-    value = aws_instance.web_server.public_ip
+    value = aws_instance.bastion_host.public_ip
 }

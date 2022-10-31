@@ -21,5 +21,5 @@ output "vpc_id" {
 
 
  output "sg" {
-    value= "${module.vpc.sg}"
+    value= "${module.vpc.bastion_sg}"
 } 
