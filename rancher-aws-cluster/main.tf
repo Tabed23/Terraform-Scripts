@@ -1,8 +1,10 @@
-#Configure the AWS Provider
+#Configure the Provider
 provider "aws" {
+
   region = var.region
 }
 provider "rke" {
+
   log_file = "rke_debug.log"
 }
 
