@@ -18,3 +18,8 @@ output "vpc_private_subnets" {
 output "vpc_id" {
   value = module.vpc.id
 }
+
+
+ output "sg" {
+    value= "${module.vpc.sg}"
+} 

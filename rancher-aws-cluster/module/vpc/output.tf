@@ -3,9 +3,13 @@ output "id" {
 }
 
 output "public_subnets" {
-  value = aws_subnet.public
+  value = aws_subnet.public[*].cidr_block
 }
 
 output "private_subnets" {
-  value = aws_subnet.private
+  value = aws_subnet.private[*].cidr_block
 }
+
+ output "sg" {
+    value= "${aws_security_group.ssh-http-sg.id}"
+} 

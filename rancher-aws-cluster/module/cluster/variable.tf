@@ -10,3 +10,7 @@ variable "public" {
 variable "private" {
   
 }
+
+variable "ec2_sg" {
+  
+}

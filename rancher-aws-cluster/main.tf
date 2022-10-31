@@ -1,5 +1,6 @@
 #Configure THE PROVIDER FOR TERRAFORM
 terraform {
+   required_version = ">= 0.13"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -29,15 +30,18 @@ module "vpc" {
   ig_gateway_name      = var.ig_gateway_name
   nat_gateway_name     = var.nat_gateway_name
   env                  = var.env_type
-  public_subnets  = var.public_subnets_cidr
-  private_subnets = var.private_subnets_cidr
+  public_subnets       = var.public_subnets_cidr
+  private_subnets      = var.private_subnets_cidr
   availability_zones   = data.aws_availability_zones.available.names
 }
-
 module "cluster" {
-  source = "./module/cluster"
-  ec2    = var.ec2_type
-  public = module.vpc.public_subnets
-  private = module.vpc.private_subnets
+  source               = "./module/cluster"
+  ec2                  = var.ec2_type
+  public               = module.vpc.public_subnets
+  private              = module.vpc.private_subnets
+  ec2_sg               = module.vpc.sg
+}
 
+module "rke" {
+  source = "./module/rke"
 }
