@@ -1,16 +1,9 @@
-variable "ec2" {
+variable "instance_type" {
   type = string
 }
 
-
-variable "public" {
-  
-}
-
-variable "private" {
-  
-}
-
-variable "ec2_sg" {
-  
-}
+variable "subnet_id" {}
+variable "ec2sg" {}
+variable "availability_zones" {}
+variable "keyname" {}
+variable "keyfile" {}

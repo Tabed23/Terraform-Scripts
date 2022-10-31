@@ -29,6 +29,9 @@ variable "private_subnets_cidr" {
 }
 
 
-variable "ec2_type" {
+variable "instance_type" {
   type = string
 }
+
+variable "keyname" {}
+variable "keyfile" {}

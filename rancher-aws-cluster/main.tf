@@ -6,7 +6,7 @@ provider "aws" {
 #Configure STATE FILE TO STORE ON S3
 terraform {
   backend "s3" {
-    bucket = "stateterraformfolder"
+    bucket = "stateterraformfolder1"
     key    = "stateterraformfolder/terraform.tfstate"
     region = "us-east-2"
   }
@@ -25,12 +25,11 @@ module "vpc" {
 }
 module "cluster" {
   source               = "./module/cluster"
-  ec2                  = var.ec2_type
-  public               = module.vpc.public_subnets
-  private              = module.vpc.private_subnets
-  ec2_sg               = module.vpc.sg
+  instance_type        =  var.instance_type
+  subnet_id            =  module.vpc.public_subnets[0].id
+  ec2sg                =  module.vpc.sg
+  availability_zones   =  data.aws_availability_zones.available.names[0]
+  keyname              =  var.keyname
+  keyfile              =  var.keyfile
 }
 
-module "rke" {
-  source = "./module/rke"
-}
