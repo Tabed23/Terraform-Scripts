@@ -1,3 +1,5 @@
+
+
 # Default vpc name
 vpc_network_name = "aws_network"
 # Default cider block
@@ -9,9 +11,9 @@ ig_gateway_name = "ig_gateway"
 # Default nat gateway name
 nat_gateway_name = "nat_gateway"
 
-public_subnets_cidr = ["10.0.16.0/20", "10.0.48.0/20", "10.0.80.0/20"]
+public_subnets_cidr = ["10.0.1.0/24"]
 
-private_subnets_cidr = ["10.0.0.0/20", "10.0.32.0/20", "10.0.64.0/20"]
+private_subnets_cidr = ["10.0.2.0/24"]
 
 env_type = "development"
 

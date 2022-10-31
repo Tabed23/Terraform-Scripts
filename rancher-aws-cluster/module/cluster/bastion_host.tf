@@ -1,4 +1,5 @@
 resource "aws_instance" "bastion_host" {
+  
   ami= data.aws_ami.ubuntu.id
 
   instance_type = var.instance_type
@@ -10,9 +11,9 @@ resource "aws_instance" "bastion_host" {
   availability_zone = var.availability_zones
 
   key_name = aws_key_pair.rsa_key.key_name
-  
-  user_data= file("./bastion_host.sh")
+  user_data = "${file("bastion_host.sh")}"
   tags = {
       Name= "bastion_host"
+     /*  tag = "${var.pem}" */
     }
 } 

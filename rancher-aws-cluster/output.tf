@@ -26,3 +26,7 @@ output "sg" {
 output "environment" {
   value = var.env_type
 }
+
+output "secret_manager" {
+  value= module.secrets-manager.secret_arns
+}

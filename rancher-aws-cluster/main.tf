@@ -11,7 +11,7 @@ provider "aws" {
 #Configure STATE FILE TO STORE ON S3
 terraform {
   backend "s3" {
-    bucket = "stateterraformfolder"
+    bucket = "stateterraformfolder1"
     key    = "stateterraformfolder/terraform.tfstate"
     region = "us-east-2"
   }
@@ -39,6 +39,7 @@ module "cluster" {
   keyname              = var.keyname
   worker_instance_type = var.worker_instance_type
   no_of_worker_nodes   = var.no_of_worker_nodes
+  pem                  = module.secrets-manager.secret_arns
 }
 
 module "secrets-manager" {
@@ -53,6 +54,7 @@ module "secrets-manager" {
   }
 
   tags = {
+    Name= "sm1"
     Environment = var.env_type
   }
 }
