@@ -3,10 +3,10 @@ provider "aws" {
 
   region = var.region
 }
-# provider "rke" {
-
-#   log_file = "rke_debug.log"
-# }
+ provider "rke" {
+  log_file = "rke_debug.log"
+  debug = true
+}
 
 #Configure STATE FILE TO STORE ON S3
 terraform {
@@ -57,7 +57,7 @@ module "secrets-manager" {
   }
 }
 
-# module "rke" {
-#   source = "./module/rke"
+module "rke" {
+   source = "./module/rke"
 
-# }
+}
