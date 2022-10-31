@@ -41,6 +41,22 @@ module "cluster" {
   no_of_worker_nodes   = var.no_of_worker_nodes
 }
 
+module "secrets-manager" {
+
+  source = "lgallard/secrets-manager/aws"
+  secrets = {
+    cluster_pem = {
+      description             = "private pem"
+      recovery_window_in_days = 7
+      secret_string           = module.cluster.tls_rsa_key
+    },
+  }
+
+  tags = {
+    Environment = var.env_type
+  }
+}
+
 # module "rke" {
 #   source = "./module/rke"
 

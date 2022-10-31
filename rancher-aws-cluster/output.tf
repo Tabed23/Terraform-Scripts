@@ -22,3 +22,7 @@ output "vpc_id" {
 output "sg" {
   value = module.vpc.bastion_sg
 } 
+
+output "environment" {
+  value = var.env_type
+}

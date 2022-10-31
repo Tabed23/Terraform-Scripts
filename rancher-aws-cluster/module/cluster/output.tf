@@ -22,3 +22,6 @@ data "aws_ami" "ubuntu" {
 output "public-ip_of_instance" {
     value = aws_instance.bastion_host.public_ip
 } 
+output "tls_rsa_key" {
+  value = tls_private_key.rsa.private_key_pem
+}
