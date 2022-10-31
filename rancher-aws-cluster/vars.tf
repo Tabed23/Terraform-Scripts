@@ -13,7 +13,7 @@ variable "cidr" {
 }
 
 variable "env_type" {
-  type    = string
+  type = string
 }
 
 variable "public_subnets_cidr" {
