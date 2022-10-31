@@ -3,9 +3,9 @@ provider "aws" {
 
   region = var.region
 }
- provider "rke" {
+provider "rke" {
   log_file = "rke_debug.log"
-  debug = true
+  debug    = true
 }
 
 #Configure STATE FILE TO STORE ON S3
@@ -58,6 +58,6 @@ module "secrets-manager" {
 }
 
 module "rke" {
-   source = "./module/rke"
+  source = "./module/rke"
 
 }

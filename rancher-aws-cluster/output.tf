@@ -21,7 +21,7 @@ output "vpc_id" {
 # Show the bastion host security group
 output "sg" {
   value = module.vpc.bastion_sg
-} 
+}
 
 output "environment" {
   value = var.env_type
