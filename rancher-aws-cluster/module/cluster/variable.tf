@@ -1,10 +1,19 @@
-variable "ec2" {
+variable "instance_type" {
   type = string
 }
-variable "public" {}
 
-variable "private" {}
+variable "private_subnet_id" {}
 
-variable "bastion_sg" {}
+variable "public_subnet_id" {}
+
+variable "ec2sg" {}
+
+variable "availability_zones" {}
+
+variable "keyname" {}
 
 variable "local_public_key" {}
+
+variable "worker_instance_type" {}
+
+variable "no_of_worker_nodes" {}

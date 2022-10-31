@@ -15,10 +15,10 @@ data "aws_ami" "ubuntu" {
     owners = ["099720109477"]
 }
 
-output "ami_ubuntu" {
+ output "ami_ubuntu" {
   value = data.aws_ami.ubuntu
 }
 
 output "public-ip_of_instance" {
     value = aws_instance.bastion_host.public_ip
-}
+} 
