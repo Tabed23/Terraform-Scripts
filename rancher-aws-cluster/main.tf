@@ -26,10 +26,12 @@ module "vpc" {
 module "cluster" {
   source               = "./module/cluster"
   instance_type        =  var.instance_type
-  subnet_id            =  module.vpc.public_subnets[0].id
+  public_subnet_id     =  module.vpc.public_subnets[0].id
+  private_subnet_id    =  module.vpc.private_subnets[0].id
   ec2sg                =  module.vpc.sg
   availability_zones   =  data.aws_availability_zones.available.names[0]
   keyname              =  var.keyname
   keyfile              =  var.keyfile
+  worker_instance_type =  var.worker_instance_type
 }
 

@@ -35,3 +35,5 @@ variable "instance_type" {
 
 variable "keyname" {}
 variable "keyfile" {}
+variable "worker_instance_type" {}
+#variable "no_of_worker_nodes" {}

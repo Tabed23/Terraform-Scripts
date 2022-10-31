@@ -7,7 +7,7 @@ output "public_subnets" {
 }
 
 output "private_subnets" {
-  value = aws_subnet.private[*].cidr_block
+  value = aws_subnet.private
 }
 
  output "sg" {
