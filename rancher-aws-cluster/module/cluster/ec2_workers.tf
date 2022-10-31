@@ -1,5 +1,5 @@
 resource "aws_instance" "worker_nodes" {
-  count=2
+  count=var.no_of_worker_nodes
   ami= data.aws_ami.ubuntu.id
   instance_type = var.worker_instance_type
   subnet_id = var.private_subnet_id

@@ -9,4 +9,4 @@ variable "availability_zones" {}
 variable "keyname" {}
 variable "keyfile" {}
 variable "worker_instance_type" {}
-#variable "no_of_worker_nodes" {}
+variable "no_of_worker_nodes" {}

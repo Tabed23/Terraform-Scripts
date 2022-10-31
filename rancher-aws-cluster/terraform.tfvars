@@ -15,4 +15,4 @@ instance_type = "t2.large"
 keyname = "bastionhost"
 keyfile = "/home/wasif/.ssh/id_rsa.pub"
 worker_instance_type = "t3.medium"
-#no_of_worker_nodes= 2
+no_of_worker_nodes= 2

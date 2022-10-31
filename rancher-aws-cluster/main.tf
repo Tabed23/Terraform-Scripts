@@ -33,5 +33,6 @@ module "cluster" {
   keyname              =  var.keyname
   keyfile              =  var.keyfile
   worker_instance_type =  var.worker_instance_type
+  no_of_worker_nodes   =  var.no_of_worker_nodes
 }
 
