@@ -30,3 +30,7 @@ output "environment" {
 output "secret_manager" {
   value= module.secrets-manager.secret_arns
 }
+
+output "region" {
+  value = var.region
+}
