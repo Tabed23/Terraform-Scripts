@@ -11,7 +11,7 @@ provider "rke" {
 #Configure STATE FILE TO STORE ON S3
 terraform {
   backend "s3" {
-    bucket = "stateterraformfolder1"
+    bucket = "stateterraformfolder"
     key    = "stateterraformfolder/terraform.tfstate"
     region = "us-east-2"
   }
@@ -39,22 +39,21 @@ module "cluster" {
   keyname              = var.keyname
   worker_instance_type = var.worker_instance_type
   no_of_worker_nodes   = var.no_of_worker_nodes
-  pem                  = module.secrets-manager.secret_arns
+  secret_manager_arn   = module.secrets-manager.secret_arns
 }
 
 module "secrets-manager" {
 
   source = "lgallard/secrets-manager/aws"
   secrets = {
-    cluster_pem = {
-      description             = "private pem"
-      recovery_window_in_days = 7
+    secret-kv-1 = {
+      description             = "private rsa for ec2"
       secret_string           = module.cluster.tls_rsa_key
     },
   }
 
   tags = {
-    Name= "sm1"
+    Name= "secrets_manager_for_private_key"
     Environment = var.env_type
   }
 }
