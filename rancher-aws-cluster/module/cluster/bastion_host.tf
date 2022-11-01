@@ -25,8 +25,12 @@ resource "aws_instance" "bastion_host" {
     inline = [
       "sudo apt update -y",
       "sudo apt upgrade -y",
-      "sudo apt install awscli -y",
-      "sudo apt install jq -y",
+      "sudo apt-get install curl wget unzip zip -y",
+      "curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip",
+      "unzip awscliv2.zip",
+      "sudo ./aws/install",
+      "sudo apt-get update -y",
+      "sudo apt-get install jq -y",
       "aws secretsmanager get-secret-value --region=${var.region} --query SecretString --secret-id ${var.secret_manager_arn} --output json | jq --raw-output > private_key.pem",
       "chmod 400 private_key.pem"
     ]
