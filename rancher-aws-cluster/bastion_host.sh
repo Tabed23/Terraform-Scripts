@@ -13,8 +13,9 @@ sudo apt install unzip
 sudo unzip awscliv2.zip
 sudo ./aws/install
 
-secret_id="$(terraform output -raw secret_manager)"
+SECRET_ID="$(terraform output -raw secret_manager)"
+REGION="$(terraform output -raw region)"
 
-PEM=$(aws secretsmanager get-secret-value  --query SecretString --secret-id $secret_id --output json | jq --raw-output)
+PEM=$(aws secretsmanager get-secret-value  --region=$REGION --query SecretString --secret-id $SECRET_ID --output json | jq --raw-output)
 echo $PEM > /home/ubuntu/private_key.pem
 chmod 400 private_key.pem
