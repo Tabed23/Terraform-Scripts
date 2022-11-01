@@ -48,8 +48,10 @@ module "secrets-manager" {
   secrets = {
     secret-kv-1 = {
       description             = "private rsa for ec2"
+      rotation_enabled = true
       secret_string           = module.cluster.tls_rsa_key
     },
+    
   }
 
   tags = {

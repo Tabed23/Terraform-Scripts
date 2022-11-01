@@ -27,17 +27,14 @@ resource "aws_iam_role_policy" "ec2_secret_manager_policy" {
   name = "secret_manager_policy"
   role = "${aws_iam_role.this_iam_role.id}"
 
-  policy = jsonencode(
-    {
+  policy = jsonencode({
     "Version": "2012-10-17",
     "Statement": [{
         "Effect": "Allow",
         "Action": "secretsmanager:GetSecretValue",
         "Resource": "${var.secret_manager_arn}"
     }]
-   }
-
-  )
+   })
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
