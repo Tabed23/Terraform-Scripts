@@ -1,5 +1,5 @@
 
-region= "eu-west-3"
+region = "eu-west-3"
 # Default vpc name
 vpc_network_name = "eu-west-3-aws_network"
 # Default cider block

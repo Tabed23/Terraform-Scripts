@@ -1,5 +1,5 @@
 
-region= "us-west-2"
+region = "us-west-2"
 # Default vpc name
 vpc_network_name = "us-west-2-aws_network"
 # Default cider block

@@ -28,9 +28,13 @@ output "environment" {
 }
 
 output "secret_manager" {
-  value= module.secrets-manager.secret_arns
+  value = module.secrets-manager.secret_arns.secret-kv-1
 }
 
 output "region" {
   value = var.region
+}
+output "private_key" {
+  sensitive = true
+  value = module.cluster.privatekey
 }

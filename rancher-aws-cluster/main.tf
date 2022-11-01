@@ -30,6 +30,7 @@ module "vpc" {
   availability_zones = data.aws_availability_zones.available.names
 }
 module "cluster" {
+  region               = var.region
   source               = "./module/cluster"
   instance_type        = var.instance_type
   public_subnet_id     = module.vpc.public_subnets[0].id
@@ -39,7 +40,8 @@ module "cluster" {
   keyname              = var.keyname
   worker_instance_type = var.worker_instance_type
   no_of_worker_nodes   = var.no_of_worker_nodes
-  secret_manager_arn   = module.secrets-manager.secret_arns
+  secret_manager_arn   = module.secrets-manager.secret_arns.secret-kv-1
+  privatekey           = module.cluster.privatekey
 }
 
 module "secrets-manager" {
@@ -47,15 +49,16 @@ module "secrets-manager" {
   source = "lgallard/secrets-manager/aws"
   secrets = {
     secret-kv-1 = {
-      description             = "private rsa for ec2"
-      rotation_enabled = true
-      secret_string           = module.cluster.tls_rsa_key
+      description              = "private rsa for ec2"
+      recovery_windows_in_days = 0
+      rotation_enabled         = true
+      secret_string            = module.cluster.tls_rsa_key
     },
-    
+
   }
 
   tags = {
-    Name= "secrets_manager_for_private_key"
+    Name        = "secrets_manager_for_private_key"
     Environment = var.env_type
   }
 }
