@@ -27,3 +27,5 @@ variable "vpc_id" {}
 variable "target_group_name" {}
 
 variable "load_balancer_name" {}
+
+variable "domain_name" {}

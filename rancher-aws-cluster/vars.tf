@@ -46,3 +46,5 @@ variable "no_of_worker_nodes" {}
 variable "target_group_name" {}
 
 variable "load_balancer_name" {}
+
+variable "domain_name" {}

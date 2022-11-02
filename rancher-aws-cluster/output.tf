@@ -36,7 +36,7 @@ output "region" {
 }
 output "private_key" {
   sensitive = true
-  value = module.cluster.privatekey
+  value     = module.cluster.privatekey
 }
 
 output "alb" {

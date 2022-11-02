@@ -32,5 +32,5 @@ output "privatekey" {
 }
 
 output "alb" {
-  value = aws_lb.my-load-balancer.dns_name
+  value = aws_lb.alb.dns_name
 }

@@ -1,5 +1,4 @@
-#----------------------TARGET GROUP---------------------
-resource "aws_lb_target_group" "my-target-group" {
+resource "aws_lb_target_group" "target-group" {
     depends_on=[aws_instance.worker_nodes]
      vpc_id = var.vpc_id
     name = var.target_group_name
@@ -7,26 +6,25 @@ resource "aws_lb_target_group" "my-target-group" {
     protocol = "HTTP"
     target_type = "instance" # ip
    
-    health_check {
+   health_check {
         interval = 10
-        path = "/"
+        path = "/healthz"
         protocol = "HTTP"
-        timeout = 5
-        healthy_threshold = 3
+        timeout = 8
+        healthy_threshold = 2
         unhealthy_threshold = 7
     }
 }
 
-resource "aws_alb_target_group_attachment" "test" {
+resource "aws_alb_target_group_attachment" "attach_to_ec2" {
     depends_on=[aws_instance.worker_nodes]
     count= length(aws_instance.worker_nodes)
-  target_group_arn = aws_lb_target_group.my-target-group.arn
-  target_id = element(aws_instance.worker_nodes.*.id, count.index)
-  port             = 80
+    target_group_arn = aws_lb_target_group.target-group.arn
+    target_id = element(aws_instance.worker_nodes.*.id, count.index)
+    port             = 80
 }
 
-#---------------------LOAD BALANCER------------------------
-resource "aws_lb" "my-load-balancer" {
+resource "aws_lb" "alb" {
     depends_on=[aws_instance.worker_nodes]
     name = var.load_balancer_name
     internal = false
@@ -38,14 +36,39 @@ resource "aws_lb" "my-load-balancer" {
     load_balancer_type = "application"
 }
 
-resource "aws_lb_listener" "my_alb_listener" {
+resource "aws_lb_listener" "alb_listener" {
     depends_on=[aws_instance.worker_nodes]
-    load_balancer_arn = aws_lb.my-load-balancer.arn
+    load_balancer_arn = aws_lb.alb.arn
     port = 80
     protocol = "HTTP"
 
     default_action  {
-        type = "forward"
-        target_group_arn = aws_lb_target_group.my-target-group.arn
+        type = "redirect"
+        target_group_arn = aws_lb_target_group.target-group.arn
+        redirect {
+            port        = 443
+            protocol    = "HTTPS"
+            status_code = "HTTP_301"
+        }
     }
 } 
+
+data "aws_acm_certificate" "issued" {
+  domain   = "*.${var.domain_name}"
+  statuses = ["ISSUED"]
+}
+
+# Redirect traffic to target group
+resource "aws_alb_listener" "https" {
+  load_balancer_arn = aws_lb.alb.id
+  port              = 443
+  protocol          = "HTTPS"
+
+  ssl_policy      = "ELBSecurityPolicy-2016-08"
+  certificate_arn = data.aws_acm_certificate.issued.arn
+
+  default_action {
+    target_group_arn = aws_lb_target_group.target-group.arn
+    type             = "forward"
+  }
+}

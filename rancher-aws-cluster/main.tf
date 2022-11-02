@@ -28,12 +28,13 @@ module "vpc" {
   public_subnets     = var.public_subnets_cidr
   private_subnets    = var.private_subnets_cidr
   availability_zones = data.aws_availability_zones.available.names
+  domain_name          = var.domain_name
 }
 module "cluster" {
-  region               = var.region
-  source               = "./module/cluster"
-  instance_type        = var.instance_type
-  public_subnet_id     = module.vpc.public_subnets
+  region           = var.region
+  source           = "./module/cluster"
+  instance_type    = var.instance_type
+  public_subnet_id = module.vpc.public_subnets
 
   private_subnet_id    = module.vpc.private_subnets
   ec2sg                = module.vpc.bastion_sg
@@ -46,7 +47,7 @@ module "cluster" {
   vpc_id               = module.vpc.id
   target_group_name    = var.target_group_name
   load_balancer_name   = var.load_balancer_name
-
+   domain_name          = var.domain_name
 }
 
 module "secrets-manager" {

@@ -21,3 +21,5 @@ variable "private_subnets" {
   type = list(string)
 }
 variable "env" {}
+
+variable "domain_name" {}
