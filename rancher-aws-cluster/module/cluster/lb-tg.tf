@@ -5,7 +5,7 @@ resource "aws_lb_target_group" "my-target-group" {
     name = var.target_group_name
     port = 80
     protocol = "HTTP"
-    target_type = "instance" # ip or lamba
+    target_type = "instance" # ip
    
     health_check {
         interval = 10
@@ -22,7 +22,7 @@ resource "aws_alb_target_group_attachment" "test" {
     count= length(aws_instance.worker_nodes)
   target_group_arn = aws_lb_target_group.my-target-group.arn
   target_id = element(aws_instance.worker_nodes.*.id, count.index)
-  port             = 8080
+  port             = 80
 }
 
 #---------------------LOAD BALANCER------------------------

@@ -18,7 +18,7 @@ resource "aws_instance" "worker_nodes" {
   
   tags = {
     
-      Name= "Rancher-Server-${count.index}"
+      Name= "worker-${count.index}"
     }
 } 
  

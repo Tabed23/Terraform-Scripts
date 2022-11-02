@@ -30,3 +30,7 @@ output "privatekey" {
     sensitive = false
     value = tls_private_key.rsa.private_key_pem
 }
+
+output "alb" {
+  value = aws_lb.my-load-balancer.dns_name
+}

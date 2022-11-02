@@ -2,7 +2,7 @@ cloud_provider:
   name: aws
 nodes:
 # SSH key path
-ssh_key_path: ./ec2-ssh-key.pem
+ssh_key_path: ./private_key.pem
 # Name of the K8s Cluster
 cluster_name: rke-cluster
 services:

@@ -18,7 +18,7 @@ private_subnets_cidr = ["10.0.2.0/24"]
 env_type = "development"
 
 #bastion host instance
-instance_type = "t2.large"
+instance_type = "t2.micro"
 
 #------- BASTIONHOST
 
@@ -26,7 +26,7 @@ keyname = "private_key"
 
 worker_instance_type = "t2.large"
 
-no_of_worker_nodes = 1
+no_of_worker_nodes = 2
 
 target_group_name = "rancher-UI-tg"
 

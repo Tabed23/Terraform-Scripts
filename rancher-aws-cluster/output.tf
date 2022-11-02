@@ -38,3 +38,7 @@ output "private_key" {
   sensitive = true
   value = module.cluster.privatekey
 }
+
+output "alb" {
+  value = module.cluster.alb
+}

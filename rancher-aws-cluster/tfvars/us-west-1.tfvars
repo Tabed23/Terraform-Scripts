@@ -11,14 +11,14 @@ ig_gateway_name = "ig_gateway"
 # Default nat gateway name
 nat_gateway_name = "nat_gateway"
 
-public_subnets_cidr = ["10.0.1.0/24"]
+public_subnets_cidr = ["10.0.1.0/24", "10.0.3.0/24"]
 
 private_subnets_cidr = ["10.0.2.0/24"]
 
 env_type = "development"
 
 #bastion host instance
-instance_type = "t2.large"
+instance_type = "t2.micro"
 
 #------- BASTIONHOST
 

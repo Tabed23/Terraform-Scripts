@@ -11,8 +11,8 @@ provider "rke" {
 #Configure STATE FILE TO STORE ON S3
 terraform {
   backend "s3" {
-    bucket = "stateterraformfolder1"
-    key    = "stateterraformfolder/terraform.tfstate"
+    bucket = "tfstatefolder"
+    key    = "tfstatefolder/terraform.tfstate"
     region = "us-east-2"
   }
 }
