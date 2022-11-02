@@ -42,3 +42,8 @@ output "private_key" {
 output "alb" {
   value = module.cluster.alb
 }
+
+output "acm_cert" {
+  value = aws_acm_certificate.cert
+   sensitive = true
+}

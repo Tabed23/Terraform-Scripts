@@ -16,7 +16,14 @@ terraform {
     region = "us-east-2"
   }
 }
+resource "aws_acm_certificate" "cert" {
+  domain_name       = "*.${var.domain_name}"
+  validation_method = "DNS"
 
+  lifecycle {
+    create_before_destroy = true
+  }
+}
 #VPC module [cofigures in all Regions, "makes" : cidr, internet ,nat gateway, public, private subnet]
 module "vpc" {
   source             = "./module/vpc"
@@ -30,12 +37,12 @@ module "vpc" {
   availability_zones = data.aws_availability_zones.available.names
   domain_name          = var.domain_name
 }
+
 module "cluster" {
   region           = var.region
   source           = "./module/cluster"
   instance_type    = var.instance_type
   public_subnet_id = module.vpc.public_subnets
-
   private_subnet_id    = module.vpc.private_subnets
   ec2sg                = module.vpc.bastion_sg
   availability_zones   = data.aws_availability_zones.available.names[0]

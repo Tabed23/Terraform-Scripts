@@ -13,7 +13,3 @@ output "private_subnets" {
 output "bastion_sg" {
     value= "${aws_security_group.ssh-http-sg.id}"
 }
-
-output "acm_cert" {
-  value = aws_acm_certificate.cert
-}
