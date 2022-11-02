@@ -37,3 +37,12 @@ variable "instance_type" {
 variable "worker_instance_type" {}
 
 variable "no_of_worker_nodes" {}
+
+
+#____________________TARGET GROUP AND LOAD BALANCER---
+
+
+
+variable "target_group_name" {}
+
+variable "load_balancer_name" {}

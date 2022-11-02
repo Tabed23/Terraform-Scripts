@@ -26,4 +26,8 @@ keyname = "private_key"
 
 worker_instance_type = "t2.large"
 
-no_of_worker_nodes = 2
+no_of_worker_nodes = 1
+
+target_group_name = "rancher-UI-tg"
+
+load_balancer_name = "rancher-UI-lb"

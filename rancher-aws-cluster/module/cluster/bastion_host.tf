@@ -1,9 +1,10 @@
 resource "aws_instance" "bastion_host" {
+  depends_on =[tls_private_key.rsa]
   ami= data.aws_ami.ubuntu.id
 
   instance_type = var.instance_type
 
-  subnet_id = var.public_subnet_id
+  subnet_id = var.public_subnet_id[0].id
 
   vpc_security_group_ids= [var.ec2sg]  
   
@@ -32,7 +33,7 @@ resource "aws_instance" "bastion_host" {
       "sudo apt-get update -y",
       "sudo apt-get install jq -y",
       "aws secretsmanager get-secret-value --region=${var.region} --query SecretString --secret-id ${var.secret_manager_arn} --output json | jq --raw-output > private_key.pem",
-      "chmod 400 private_key.pem"
+      "chmod 400 private_key.pem",
     ]
   }
 } 

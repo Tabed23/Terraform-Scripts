@@ -11,7 +11,7 @@ ig_gateway_name = "ig_gateway"
 # Default nat gateway name
 nat_gateway_name = "nat_gateway"
 
-public_subnets_cidr = ["10.0.1.0/24"]
+public_subnets_cidr = ["10.0.1.0/24", "10.0.3.0/24"]
 
 private_subnets_cidr = ["10.0.2.0/24"]
 
@@ -26,4 +26,8 @@ keyname = "private_key"
 
 worker_instance_type = "t2.large"
 
-no_of_worker_nodes = 2
+no_of_worker_nodes = 1
+
+target_group_name = "rancher-UI-tg"
+
+load_balancer_name = "rancher-UI-lb"

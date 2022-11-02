@@ -1,11 +1,12 @@
 resource "aws_instance" "worker_nodes" {
+  depends_on= [aws_instance.bastion_host]
   count=var.no_of_worker_nodes
 
   ami= data.aws_ami.ubuntu.id
 
   instance_type = var.worker_instance_type
 
-  subnet_id = var.private_subnet_id
+  subnet_id = var.private_subnet_id[0].id
 
   vpc_security_group_ids= [var.ec2sg]  
 
@@ -13,11 +14,11 @@ resource "aws_instance" "worker_nodes" {
   
   key_name = aws_key_pair.rsa_key.key_name
 
-  user_data= file("./worker.sh") 
-
+  user_data = "${file("./rancher.sh")}"
+  
   tags = {
     
-      Name= "worker_nodes-${count.index}"
+      Name= "Rancher-Server-${count.index}"
     }
 } 
  

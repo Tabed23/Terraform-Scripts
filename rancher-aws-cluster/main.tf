@@ -11,7 +11,7 @@ provider "rke" {
 #Configure STATE FILE TO STORE ON S3
 terraform {
   backend "s3" {
-    bucket = "stateterraformfolder"
+    bucket = "stateterraformfolder1"
     key    = "stateterraformfolder/terraform.tfstate"
     region = "us-east-2"
   }
@@ -33,8 +33,9 @@ module "cluster" {
   region               = var.region
   source               = "./module/cluster"
   instance_type        = var.instance_type
-  public_subnet_id     = module.vpc.public_subnets[0].id
-  private_subnet_id    = module.vpc.private_subnets[0].id
+  public_subnet_id     = module.vpc.public_subnets
+
+  private_subnet_id    = module.vpc.private_subnets
   ec2sg                = module.vpc.bastion_sg
   availability_zones   = data.aws_availability_zones.available.names[0]
   keyname              = var.keyname
@@ -42,6 +43,10 @@ module "cluster" {
   no_of_worker_nodes   = var.no_of_worker_nodes
   secret_manager_arn   = module.secrets-manager.secret_arns.secret-kv-1
   privatekey           = module.cluster.privatekey
+  vpc_id               = module.vpc.id
+  target_group_name    = var.target_group_name
+  load_balancer_name   = var.load_balancer_name
+
 }
 
 module "secrets-manager" {
@@ -51,7 +56,6 @@ module "secrets-manager" {
     secret-kv-1 = {
       description              = "private rsa for ec2"
       recovery_windows_in_days = 0
-      rotation_enabled         = true
       secret_string            = module.cluster.tls_rsa_key
     },
 

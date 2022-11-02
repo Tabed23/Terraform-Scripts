@@ -21,3 +21,9 @@ variable "no_of_worker_nodes" {}
 variable "secret_manager_arn" {}
 
 variable "privatekey" {}
+
+variable "vpc_id" {}
+
+variable "target_group_name" {}
+
+variable "load_balancer_name" {}
