@@ -1,5 +1,10 @@
+
+data "aws_acm_certificate" "issued" {
+  domain   = "*.${var.domain_name}"
+  statuses = ["ISSUED"]
+}
 resource "aws_lb_target_group" "target-group" {
-    depends_on=[aws_instance.worker_nodes]
+    depends_on=[aws_instance.worker_nodes, data.aws_acm_certificate.issued]
      vpc_id = var.vpc_id
     name = var.target_group_name
     port = 80
@@ -17,7 +22,7 @@ resource "aws_lb_target_group" "target-group" {
 }
 
 resource "aws_alb_target_group_attachment" "attach_to_ec2" {
-    depends_on=[aws_instance.worker_nodes]
+    depends_on=[aws_instance.worker_nodes, data.aws_acm_certificate.issued]
     count= length(aws_instance.worker_nodes)
     target_group_arn = aws_lb_target_group.target-group.arn
     target_id = element(aws_instance.worker_nodes.*.id, count.index)
@@ -25,7 +30,7 @@ resource "aws_alb_target_group_attachment" "attach_to_ec2" {
 }
 
 resource "aws_lb" "alb" {
-    depends_on=[aws_instance.worker_nodes]
+    depends_on=[aws_instance.worker_nodes, data.aws_acm_certificate.issued]
     name = var.load_balancer_name
     internal = false
     security_groups = [var.ec2sg]
@@ -37,7 +42,7 @@ resource "aws_lb" "alb" {
 }
 
 resource "aws_lb_listener" "alb_listener" {
-    depends_on=[aws_instance.worker_nodes]
+    depends_on=[aws_instance.worker_nodes, data.aws_acm_certificate.issued]
     load_balancer_arn = aws_lb.alb.arn
     port = 80
     protocol = "HTTP"
@@ -53,13 +58,10 @@ resource "aws_lb_listener" "alb_listener" {
     }
 } 
 
-data "aws_acm_certificate" "issued" {
-  domain   = "*.${var.domain_name}"
-  statuses = ["ISSUED"]
-}
 
 # Redirect traffic to target group
 resource "aws_alb_listener" "https" {
+  depends_on=[aws_instance.worker_nodes, data.aws_acm_certificate.issued]
   load_balancer_arn = aws_lb.alb.id
   port              = 443
   protocol          = "HTTPS"

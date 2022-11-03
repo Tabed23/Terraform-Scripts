@@ -44,53 +44,48 @@
 #   ]
 # }
 
-# resource "rke_cluster" "devcluster" {
-#   kubernetes_version = "v1.23.6-rancher1-1"
-#   depends_on = [
-#     local_file.dev-rke-node-key,
-#     module.dev_rancher_infra
-#   ]
-#   cloud_provider {
-#     name = "external"
-#   }
+resource "rke_cluster" "devcluster" {
+  kubernetes_version = var.k8version
+  cloud_provider {
+    name = "aws"
+  }
 
-#   network {
-#     plugin = "flannel"
-#   }
-#   delay_on_creation = 60
-#   bastion_host {
-#     address = module.dev_rancher_infra.dev_bastion_address
-#     user    = module.dev_rancher_infra.ssh_username
-#     ssh_key = module.dev_rancher_infra.private_key
-#   }
-#   nodes {
-#     # address = module.nodes.addresses[0]
-#     address = module.dev_rancher_infra.dev_internal_ips[0]
-#     # internal_address = module.nodes.internal_ips[0]
-#     user              = module.dev_rancher_infra.ssh_username
-#     ssh_key           = module.dev_rancher_infra.private_key
-#     role              = ["controlplane", "etcd", "worker"]
-#     hostname_override = module.dev_rancher_infra.ec2_names[0]
-#   }
-#   nodes {
-#     # address = module.nodes.addresses[1]
-#     address = module.dev_rancher_infra.dev_internal_ips[1]
-#     # internal_address = module.nodes.internal_ips[1]
-#     user              = module.dev_rancher_infra.ssh_username
-#     ssh_key           = module.dev_rancher_infra.private_key
-#     role              = ["worker"]
-#     hostname_override = module.dev_rancher_infra.ec2_names[1]
-#   }
-#   nodes {
-#     # address = module.nodes.addresses[2]
-#     address = module.dev_rancher_infra.dev_internal_ips[2]
-#     # internal_address = module.nodes.internal_ips[2]
-#     user              = module.dev_rancher_infra.ssh_username
-#     ssh_key           = module.dev_rancher_infra.private_key
-#     role              = ["worker"]
-#     hostname_override = module.dev_rancher_infra.ec2_names[2]
-#   }
-# }
+  network {
+    plugin = "flannel"
+  }
+  delay_on_creation = 60
+  bastion_host {
+    address           = var.bastion_address
+    user              =  var.ssh_username
+    ssh_key           = var.private_key
+  }
+  nodes {
+    address           = var.master_ip
+    user              = var.ssh_username
+    ssh_key           = var.private_key
+    role              = ["controlplane", "etcd", "worker"]
+    hostname_override = "master"
+  }
+  nodes {
+    address           = var.woker_node_ip[0]
+    user              = var.ssh_username
+    ssh_key           = var.private_key
+    role              = ["worker"]
+    hostname_override = "worker"
+  }
+  nodes {
+    address           = var.woker_node_ip[1]
+    user              = var.ssh_username
+    ssh_key           = var.private_key
+    role              = ["worker"]
+    hostname_override = "worker"
+  }
+
+  upgrade_strategy {
+      drain = true
+      max_unavailable_worker = "20%"
+  }
+}
 
 # resource "local_file" "kube_cluster_yaml" {
 #   depends_on = [

@@ -31,3 +31,6 @@ no_of_worker_nodes = 2
 target_group_name = "rke-tg"
 
 load_balancer_name = "rke-lb"
+
+
+domain_name = "zahnymous.io"

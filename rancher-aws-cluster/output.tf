@@ -44,6 +44,18 @@ output "alb" {
 }
 
 output "acm_cert" {
-  value = aws_acm_certificate.cert
-   sensitive = true
+  value     = module.vpc.acm_cert
+  sensitive = true
+}
+
+
+output "bastion_ip" {
+  value = module.cluster.bastion_host_ip
+}
+output "woker_ip" {
+  value = module.cluster.worker_instance_ip
+}
+
+output "master_ip" {
+  value = module.cluster.master_instance_ip
 }

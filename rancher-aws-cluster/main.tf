@@ -3,8 +3,11 @@ provider "aws" {
 
   region = var.region
 }
+provider "rancher2" {
+  bootstrap = true
+}
+
 provider "rke" {
-  log_file = "rke_debug.log"
   debug    = true
 }
 
@@ -16,14 +19,7 @@ terraform {
     region = "us-east-2"
   }
 }
-resource "aws_acm_certificate" "cert" {
-  domain_name       = "*.${var.domain_name}"
-  validation_method = "DNS"
 
-  lifecycle {
-    create_before_destroy = true
-  }
-}
 #VPC module [cofigures in all Regions, "makes" : cidr, internet ,nat gateway, public, private subnet]
 module "vpc" {
   source             = "./module/vpc"
@@ -35,14 +31,17 @@ module "vpc" {
   public_subnets     = var.public_subnets_cidr
   private_subnets    = var.private_subnets_cidr
   availability_zones = data.aws_availability_zones.available.names
-  domain_name          = var.domain_name
+  domain_name        = var.domain_name
 }
 
 module "cluster" {
-  region           = var.region
-  source           = "./module/cluster"
-  instance_type    = var.instance_type
-  public_subnet_id = module.vpc.public_subnets
+  depends_on = [
+    module.vpc
+  ]
+  region               = var.region
+  source               = "./module/cluster"
+  instance_type        = var.instance_type
+  public_subnet_id     = module.vpc.public_subnets
   private_subnet_id    = module.vpc.private_subnets
   ec2sg                = module.vpc.bastion_sg
   availability_zones   = data.aws_availability_zones.available.names[0]
@@ -54,7 +53,7 @@ module "cluster" {
   vpc_id               = module.vpc.id
   target_group_name    = var.target_group_name
   load_balancer_name   = var.load_balancer_name
-   domain_name          = var.domain_name
+  domain_name          = var.domain_name
 }
 
 module "secrets-manager" {
@@ -77,5 +76,11 @@ module "secrets-manager" {
 
 module "rke" {
   source = "./module/rke"
+  depends_on = [
+    module.vpc
+  ]
+  master_ip       = module.cluster.master_instance_ip
+  bastion_address = module.cluster.bastion_host_ip
+  woker_node_ip   = module.cluster.worker_instance_ip
 
 }

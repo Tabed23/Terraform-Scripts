@@ -34,3 +34,14 @@ output "privatekey" {
 output "alb" {
   value = aws_lb.alb.dns_name
 }
+
+output "bastion_host_ip" {
+  value = aws_instance.bastion_host.public_ip
+}
+output "worker_instance_ip" {
+  value = aws_instance.worker_nodes.*.private_ip
+}
+
+output "master_instance_ip" {
+  value = aws_instance.master_nodes.private_ip
+}
