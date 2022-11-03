@@ -4,11 +4,9 @@ provider "aws" {
   region = var.region
 }
 provider "rancher2" {
+  alias = "bootstrap"
+  api_url   = "https://rancher.cloudcents.bylight.com"
   bootstrap = true
-}
-
-provider "rke" {
-  debug    = true
 }
 
 #Configure STATE FILE TO STORE ON S3

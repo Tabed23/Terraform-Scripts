@@ -17,3 +17,9 @@ variable "private_key" {
 variable "master_ip" {}
 
 variable "woker_node_ip" {}
+
+
+variable "cluster_name" {
+  type = string
+  default = "rks_cluste"
+}

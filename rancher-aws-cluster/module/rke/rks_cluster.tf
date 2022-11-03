@@ -44,7 +44,9 @@
 #   ]
 # }
 
-resource "rke_cluster" "devcluster" {
+resource "rancher2_cluster" "devcluster" {
+
+  name = var.cluster_name
   kubernetes_version = var.k8version
   cloud_provider {
     name = "aws"
@@ -52,6 +54,9 @@ resource "rke_cluster" "devcluster" {
 
   network {
     plugin = "flannel"
+    options = {
+      flannel_backend_type = "vxlan"
+      } 
   }
   delay_on_creation = 60
   bastion_host {
