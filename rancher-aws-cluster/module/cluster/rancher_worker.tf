@@ -12,6 +12,8 @@ resource "aws_instance" "worker_nodes" {
 
   availability_zone = var.availability_zones
   
+  iam_instance_profile = "${aws_iam_instance_profile.worker_profile.name}"
+
   key_name = aws_key_pair.rsa_key.key_name
 
   user_data = "${file("./rancher.sh")}"

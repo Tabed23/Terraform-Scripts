@@ -10,14 +10,15 @@ resource "aws_instance" "master_nodes" {
   vpc_security_group_ids= [var.ec2sg]  
 
   availability_zone = var.availability_zones
-  
+    
+  iam_instance_profile = "${aws_iam_instance_profile.master_profile.name}"
   key_name = aws_key_pair.rsa_key.key_name
 
   user_data = "${file("./rancher.sh")}"
   
   tags = {
     
-      Name= "worker-${count.index}"
+      Name= "master_control_plan"
     }
 } 
  

@@ -24,9 +24,9 @@ instance_type = "t2.micro"
 
 keyname = "private_key"
 
-worker_instance_type = "t2.large"
+worker_instance_type = "t2.micro"
 
-no_of_worker_nodes = 1
+no_of_worker_nodes = 2
 
 target_group_name = "rke-tg"
 

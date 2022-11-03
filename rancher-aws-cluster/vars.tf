@@ -48,3 +48,24 @@ variable "target_group_name" {}
 variable "load_balancer_name" {}
 
 variable "domain_name" {}
+
+
+variable "k8version" {
+  default = "v1.15.5-rancher1-1"
+}
+
+variable "ssh_username" {
+  type = string
+  default = "ubuntu"
+}
+
+variable "private_key" {
+  type = string
+  default = "private_key.pem"
+}
+
+
+variable "cluster_name" {
+  type = string
+  default = "rks_cluste"
+}

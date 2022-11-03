@@ -3,11 +3,6 @@ provider "aws" {
 
   region = var.region
 }
-provider "rancher2" {
-  alias = "bootstrap"
-  api_url   = "https://rancher.cloudcents.bylight.com"
-  bootstrap = true
-}
 
 #Configure STATE FILE TO STORE ON S3
 terraform {
@@ -72,13 +67,65 @@ module "secrets-manager" {
   }
 }
 
-module "rke" {
-  source = "./module/rke"
-  depends_on = [
-    module.vpc
-  ]
-  master_ip       = module.cluster.master_instance_ip
-  bastion_address = module.cluster.bastion_host_ip
-  woker_node_ip   = module.cluster.worker_instance_ip
+# module "rke" {
+#   source = "./module/rke"
+#   depends_on = [
+#     module.vpc
+#   ]
+#   master_ip       = module.cluster.master_instance_ip
+#   bastion_address = module.cluster.bastion_host_ip
+#   woker_node_ip   = module.cluster.worker_instance_ip
 
+# }
+provider "rke" {
+  log_file = "rke_debug.log"
+  debug = true
+}
+
+resource "rke_cluster" "devcluster" {
+  cluster_name = var.cluster_name
+
+  kubernetes_version = var.k8version
+  ssh_agent_auth = true
+  cloud_provider {
+    name = "aws"
+  }
+  network {
+    plugin = "flannel"
+    options = {
+      flannel_backend_type = "vxlan"
+      } 
+    }
+  delay_on_creation = 60
+  bastion_host {
+    address           = module.cluster.worker_instance_ip
+    user              =  var.ssh_username
+    ssh_key           = var.private_key
+  }
+  nodes {
+    address           = module.cluster.master_instance_ip
+    user              = var.ssh_username
+    ssh_key           = var.private_key
+    role              = ["controlplane", "etcd", "worker"]
+    hostname_override = "master"
+  }
+  nodes {
+    address           = module.cluster.worker_instance_ip[0]
+    user              = var.ssh_username
+    ssh_key           = var.private_key
+    role              = ["worker"]
+    hostname_override = "worker"
+  }
+  nodes {
+    address           = module.cluster.worker_instance_ip[1]
+    user              = var.ssh_username
+    ssh_key           = var.private_key
+    role              = ["worker"]
+    hostname_override = "worker"
+  }
+
+  upgrade_strategy {
+      drain = true
+      max_unavailable_worker = "20%"
+  }
 }

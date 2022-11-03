@@ -44,53 +44,66 @@
 #   ]
 # }
 
-resource "rancher2_cluster" "devcluster" {
+# provider "rancher2" {
+#   alias = "bootstrap"
+#   api_url   = "https://rancher.cloudcents.bylight.com"  
+#   access_key = "AKIAVGYPFOA2ZWRCOTPS"
+#   secret_key = "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"
+# }
 
-  name = var.cluster_name
-  kubernetes_version = var.k8version
-  cloud_provider {
-    name = "aws"
-  }
+# resource "rancher2_cloud_credential" "foo" {
+#   name = "rke-aws"
+#   description = "rke cluster"
+#   amazonec2_credential_config {
+#     access_key = "AKIAVGYPFOA2ZWRCOTPS"
+#     secret_key = "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"
+#   }
+# }
+# resource "rke_cluster" "devcluster" {
+#   kubernetes_version = var.k8version
+#   cloud_provider {
+#     name = "aws"
+#   }
 
-  network {
-    plugin = "flannel"
-    options = {
-      flannel_backend_type = "vxlan"
-      } 
-  }
-  delay_on_creation = 60
-  bastion_host {
-    address           = var.bastion_address
-    user              =  var.ssh_username
-    ssh_key           = var.private_key
-  }
-  nodes {
-    address           = var.master_ip
-    user              = var.ssh_username
-    ssh_key           = var.private_key
-    role              = ["controlplane", "etcd", "worker"]
-    hostname_override = "master"
-  }
-  nodes {
-    address           = var.woker_node_ip[0]
-    user              = var.ssh_username
-    ssh_key           = var.private_key
-    role              = ["worker"]
-    hostname_override = "worker"
-  }
-  nodes {
-    address           = var.woker_node_ip[1]
-    user              = var.ssh_username
-    ssh_key           = var.private_key
-    role              = ["worker"]
-    hostname_override = "worker"
-  }
+#   network {
+#     plugin = "flannel"
+#     options = {
+#       flannel_backend_type = "vxlan"
+#       } 
+#     }
+#   delay_on_creation = 60
+#   bastion_host {
+#     address           = var.bastion_address
+#     user              =  var.ssh_username
+#     ssh_key           = var.private_key
+#   }
+#   nodes {
+#     address           = var.master_ip
+#     user              = var.ssh_username
+#     ssh_key           = var.private_key
+#     role              = ["controlplane", "etcd", "worker"]
+#     hostname_override = "master"
+#   }
+#   nodes {
+#     address           = var.woker_node_ip[0]
+#     user              = var.ssh_username
+#     ssh_key           = var.private_key
+#     role              = ["worker"]
+#     hostname_override = "worker"
+#   }
+#   nodes {
+#     address           = var.woker_node_ip[1]
+#     user              = var.ssh_username
+#     ssh_key           = var.private_key
+#     role              = ["worker"]
+#     hostname_override = "worker"
+#   }
 
-  upgrade_strategy {
-      drain = true
-      max_unavailable_worker = "20%"
-  }
-}
+#   upgrade_strategy {
+#       drain = true
+#       max_unavailable_worker = "20%"
+#   }
+# }
 
 # resource "local_file" "kube_cluster_yaml" {
 #   depends_on = [
