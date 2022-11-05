@@ -1,7 +1,7 @@
 
-region = "us-west-2"
+region = "ca-central-1"
 # Default vpc name
-vpc_network_name = "us-west-2-aws_network"
+vpc_network_name = "ca-central-1-aws_network"
 # Default cider block
 cidr = "10.0.0.0/16"
 
@@ -11,7 +11,7 @@ ig_gateway_name = "ig_gateway"
 # Default nat gateway name
 nat_gateway_name = "nat_gateway"
 
-public_subnets_cidr = ["10.0.1.0/24","10.0.3.0/24"]
+public_subnets_cidr = ["10.0.1.0/24", "10.0.3.0/24"]
 
 private_subnets_cidr = ["10.0.2.0/24"]
 

@@ -51,21 +51,37 @@ variable "domain_name" {}
 
 
 variable "k8version" {
-  default = "v1.15.5-rancher1-1"
+  default = "v1.21.14-rancher1-1"
 }
 
 variable "ssh_username" {
-  type = string
+  type    = string
   default = "ubuntu"
 }
 
 variable "private_key" {
-  type = string
+  type    = string
   default = "private_key.pem"
 }
 
 
-variable "cluster_name" {
+variable "api_url" {
   type = string
+  default = "http://rancher.your_domain"
+}
+
+variable "cluster_name" {
+  type    = string
   default = "rks_cluste"
+}
+variable "rancher_instance_type" { }
+
+variable "access_key" {
+  type = string
+  default = "you access_key"
+}
+
+variable "secret_key" {
+  type = string
+  default = "you secret_key"
 }

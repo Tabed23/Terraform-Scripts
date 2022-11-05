@@ -24,6 +24,8 @@ instance_type = "t2.micro"
 
 keyname = "private_key"
 
+rancher_instance_type = "t2.large"
+
 worker_instance_type = "t2.large"
 
 no_of_worker_nodes = 1
@@ -33,4 +35,4 @@ target_group_name = "rke-tg"
 load_balancer_name = "rke-lb"
 
 
-domain_name = "zahnymous.io"
+domain_name = "your domain"

@@ -1,9 +1,9 @@
-resource "aws_instance" "master_nodes" {
+resource "aws_instance" "rancher_server" {
   depends_on= [aws_instance.bastion_host]
 
   ami= data.aws_ami.ubuntu.id
 
-  instance_type = var.worker_instance_type
+  instance_type = var.rancher_instance_type
 
   subnet_id = var.private_subnet_id[0].id
 
@@ -18,7 +18,7 @@ resource "aws_instance" "master_nodes" {
   
   tags = {
     
-      Name= "master_control_plan"
+      Name= "rancher_server"
     }
 } 
  

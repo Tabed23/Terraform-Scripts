@@ -1,3 +1,19 @@
+data "aws_ami" "ubuntu" {
+
+    most_recent = true
+
+    filter {
+        name   = "name"
+        values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    }
+
+    filter {
+        name = "virtualization-type"
+        values = ["hvm"]
+    }
+
+    owners = ["099720109477"]
+}
 # Get the availability_zones
 data "aws_availability_zones" "available" {
   state = "available"
@@ -28,7 +44,7 @@ output "environment" {
 }
 
 output "secret_manager" {
-  value = module.secrets-manager.secret_arns.secret-kv-1
+  value = module.secrets-manager.secret_arns.secret-key
 }
 
 output "region" {
@@ -43,19 +59,22 @@ output "alb" {
   value = module.cluster.alb
 }
 
-output "acm_cert" {
-  value     = module.vpc.acm_cert
-  sensitive = true
-}
+# output "acm_cert" {
+#   value     = module.vpc.acm_cert
+#   sensitive = true
+# }
 
 
 output "bastion_ip" {
   value = module.cluster.bastion_host_ip
 }
-output "woker_ip" {
-  value = module.cluster.worker_instance_ip
+
+
+output "rancher_instance" {
+  value = module.cluster.rancher_instance_ip
 }
 
-output "master_ip" {
-  value = module.cluster.master_instance_ip
+
+output "rancher_domain" {
+  value = module.cluster.domain_record
 }

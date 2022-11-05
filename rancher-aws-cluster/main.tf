@@ -7,8 +7,8 @@ provider "aws" {
 #Configure STATE FILE TO STORE ON S3
 terraform {
   backend "s3" {
-    bucket = "tfstatefolder"
-    key    = "tfstatefolder/terraform.tfstate"
+    bucket = "your aws bucket"
+    key    = "your aws bucket/terraform.tfstate"
     region = "us-east-2"
   }
 }
@@ -39,9 +39,9 @@ module "cluster" {
   ec2sg                = module.vpc.bastion_sg
   availability_zones   = data.aws_availability_zones.available.names[0]
   keyname              = var.keyname
-  worker_instance_type = var.worker_instance_type
+  rancher_instance_type = var.rancher_instance_type
   no_of_worker_nodes   = var.no_of_worker_nodes
-  secret_manager_arn   = module.secrets-manager.secret_arns.secret-kv-1
+  secret_manager_arn   = module.secrets-manager.secret_arns.secret-key
   privatekey           = module.cluster.privatekey
   vpc_id               = module.vpc.id
   target_group_name    = var.target_group_name
@@ -53,7 +53,7 @@ module "secrets-manager" {
 
   source = "lgallard/secrets-manager/aws"
   secrets = {
-    secret-kv-1 = {
+    secret-key = {
       description              = "private rsa for ec2"
       recovery_windows_in_days = 0
       secret_string            = module.cluster.tls_rsa_key
@@ -64,68 +64,5 @@ module "secrets-manager" {
   tags = {
     Name        = "secrets_manager_for_private_key"
     Environment = var.env_type
-  }
-}
-
-# module "rke" {
-#   source = "./module/rke"
-#   depends_on = [
-#     module.vpc
-#   ]
-#   master_ip       = module.cluster.master_instance_ip
-#   bastion_address = module.cluster.bastion_host_ip
-#   woker_node_ip   = module.cluster.worker_instance_ip
-
-# }
-provider "rke" {
-  log_file = "rke_debug.log"
-  debug = true
-}
-
-resource "rke_cluster" "devcluster" {
-  cluster_name = var.cluster_name
-
-  kubernetes_version = var.k8version
-  ssh_agent_auth = true
-  cloud_provider {
-    name = "aws"
-  }
-  network {
-    plugin = "flannel"
-    options = {
-      flannel_backend_type = "vxlan"
-      } 
-    }
-  delay_on_creation = 60
-  bastion_host {
-    address           = module.cluster.worker_instance_ip
-    user              =  var.ssh_username
-    ssh_key           = var.private_key
-  }
-  nodes {
-    address           = module.cluster.master_instance_ip
-    user              = var.ssh_username
-    ssh_key           = var.private_key
-    role              = ["controlplane", "etcd", "worker"]
-    hostname_override = "master"
-  }
-  nodes {
-    address           = module.cluster.worker_instance_ip[0]
-    user              = var.ssh_username
-    ssh_key           = var.private_key
-    role              = ["worker"]
-    hostname_override = "worker"
-  }
-  nodes {
-    address           = module.cluster.worker_instance_ip[1]
-    user              = var.ssh_username
-    ssh_key           = var.private_key
-    role              = ["worker"]
-    hostname_override = "worker"
-  }
-
-  upgrade_strategy {
-      drain = true
-      max_unavailable_worker = "20%"
   }
 }

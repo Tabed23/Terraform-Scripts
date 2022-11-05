@@ -14,10 +14,8 @@ sudo swapoff -a
 sudo systemctl daemon-reload
 sudo systemctl enable docker
 sudo systemctl start docker
-mkdir rancher-volume
-sudo docker run -d  --name rks-server -v $(pwd)/rancher-volume:/var/lib/rancher --restart=unless-stopped -p 80:80 -p 443:443 --privileged -v /opt/rancher:/var/lib/rancher rancher/rancher:latest
-
-sudo docker log rks-server  > rancher.log
+#sudo docker run -d  --name rks-server --restart=unless-stopped -p 80:80 -p 443:443 --privileged -v /opt/rancher:/var/lib/rancher rancher/rancher:latest
+sudo docker run -d --name rks-server -v /opt/rancher:/var/lib/rancher --restart=unless-stopped -p 80:80 -p 443:443  -e CATTLE_BOOTSTRAP_PASSWORD=passwordpassword --privileged rancher/rancher:latest
 
 # Configure sysctl.
 sudo modprobe overlay

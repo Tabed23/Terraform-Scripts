@@ -38,10 +38,16 @@ output "alb" {
 output "bastion_host_ip" {
   value = aws_instance.bastion_host.public_ip
 }
-output "worker_instance_ip" {
-  value = aws_instance.worker_nodes.*.private_ip
+
+
+output "rancher_instance_ip" {
+  value = aws_instance.rancher_server.private_ip
 }
 
-output "master_instance_ip" {
-  value = aws_instance.master_nodes.private_ip
+output "domain_record" {
+  value = aws_route53_record.record.name
+}
+
+output "instance_profile" {
+  value = aws_iam_instance_profile.master_profile.name
 }

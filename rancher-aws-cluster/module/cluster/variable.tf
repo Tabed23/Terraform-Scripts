@@ -14,8 +14,7 @@ variable "keyname" {}
 
 variable "region" {}
 
-variable "worker_instance_type" {}
-
+variable "rancher_instance_type" {}
 variable "no_of_worker_nodes" {}
 
 variable "secret_manager_arn" {}
@@ -29,3 +28,13 @@ variable "target_group_name" {}
 variable "load_balancer_name" {}
 
 variable "domain_name" {}
+
+variable "zone_id" {
+  type = string
+  default = "your aws zone id"
+}
+
+variable "rancher_domain" {
+    type = string
+  default = "your aws rancher domain"
+}

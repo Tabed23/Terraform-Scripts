@@ -12,7 +12,6 @@ resource "aws_key_pair" "rsa_key" {
 
 resource "local_file" "instance_key" {
     content  =  tls_private_key.rsa.private_key_pem
-    file_permission      = "400"
-    directory_permission = "400"
+    file_permission      = "776"
     filename = var.keyname
 }

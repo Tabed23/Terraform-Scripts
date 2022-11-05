@@ -19,7 +19,7 @@ env_type = "development"
 
 #bastion host instance
 instance_type = "t2.micro"
-
+rancher_instance_type = "t2.large"
 #------- BASTIONHOST
 
 keyname = "private_key"
@@ -32,4 +32,4 @@ target_group_name = "rke-tg"
 
 load_balancer_name = "rke-lb"
 
-domain_name = "zahnymous.io"
+domain_name = "your domain"
