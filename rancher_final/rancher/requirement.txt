@@ -1,0 +1,29 @@
+Folder structure
+tfvars
+  - us-east-1.tfvars
+  - us-east-2.tfvars
+  - etc
+  
+module
+  --> infrastructure
+        --> Where we define the VPC Subnets SG NGW IGW RT EIP etc
+  --> Rancher (UI)
+        --> aws
+	       --> we create the 1 rancher ec2 instance in the public subnet
+		       We configure the rancher instance with the rancher-common module
+			   Route 53 record off of the rancher public IP
+		--> rancher-common
+  --> Global (cluster)
+        --> aws
+		      --> Inside the aws folder, we are creating the iam roles, the key pair, the servers that will be part of the cluster
+			      the servers are 1 bastion and 4 nodes
+				  Inside the aws folder we are creating the lb, target group, tg attachment, dns, listener, 
+		rke.tf
+
+main.tf
+  module infrastructure
+  module rancher
+  module global
+
+
+kubectl --kubeconfig kubeconfig.yaml get pods

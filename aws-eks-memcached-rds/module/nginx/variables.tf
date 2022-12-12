@@ -1,0 +1,11 @@
+variable "ec2_instance_size" {}
+variable "load_balancer_name" {}
+variable "sg" {}
+variable "availability_zones" {}
+variable "key_name" {}
+variable "public_subnet_id" {}
+variable "region" {}
+variable "instance_profile" {}
+variable "vpc_id" {}
+variable "target_group_name" {}
+variable "private_key" {}
