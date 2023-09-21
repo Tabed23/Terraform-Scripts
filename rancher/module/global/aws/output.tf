@@ -31,5 +31,5 @@ output "instance_profile" {
   value = aws_iam_instance_profile.master_profile.name
 }
 output "aws_keypair" {
-  value= aws_key_pair.rsa_key
+  value = aws_key_pair.rsa_key
 }

@@ -15,19 +15,19 @@ resource "aws_instance" "nginx-ec2" {
     Name = "nginx"
   }
 
- connection {
+  connection {
     type        = "ssh"
     user        = "ubuntu"
     host        = self.public_ip
     private_key = var.private_key
   }
   provisioner "file" {
-    source="nginx.conf"
-    destination="/home/ubuntu/nginx.conf"
+    source      = "nginx.conf"
+    destination = "/home/ubuntu/nginx.conf"
   }
   provisioner "file" {
-    source="default"
-    destination="/home/ubuntu/default"
+    source      = "default"
+    destination = "/home/ubuntu/default"
   }
   provisioner "remote-exec" {
     inline = [

@@ -23,6 +23,6 @@ output "tls_rsa_key" {
   value = tls_private_key.rsa.private_key_pem
 }
 output "privatekey" {
-    sensitive = false
-    value = tls_private_key.rsa.private_key_pem
+  sensitive = false
+  value     = tls_private_key.rsa.private_key_pem
 }

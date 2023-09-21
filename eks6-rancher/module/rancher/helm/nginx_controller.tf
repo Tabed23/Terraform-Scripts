@@ -24,7 +24,7 @@ resource "helm_release" "nginx_ingress" {
     value = "true"
   }
   set {
-    name = "controller.name"
+    name  = "controller.name"
     value = "ngix-controller"
   }
 

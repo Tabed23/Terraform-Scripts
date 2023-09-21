@@ -1,7 +1,7 @@
-  variable "region" {
+variable "region" {
   type    = string
   default = "us-east-2"
-} 
+}
 
 variable "vpc_cidr" {
   type = string
@@ -25,7 +25,7 @@ variable "public_subnets_cidr" {
 
 variable "private_subnets_cidr" {
   type = list(string)
-} 
+}
 
 variable "keyfile" {}
 
@@ -43,7 +43,7 @@ variable "host_port" {}
 variable "td_cpu" {}
 variable "td_memory" {}
 variable "container_memory" {}
-variable "container_cpu" {} 
+variable "container_cpu" {}
 
 #---------------------LOAD BALANCER & TARGET GROUP-----------
 variable "target_group_name" {}

@@ -13,7 +13,7 @@ resource "aws_instance" "bastion_host" {
   tags = {
     Name = "bastion_host"
   }
-    connection {
+  connection {
     type        = "ssh"
     user        = "ubuntu"
     host        = self.public_ip

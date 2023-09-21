@@ -73,16 +73,16 @@ resource "rancher2_node_template" "node_template" {
   description         = "node template for rke rancher cluster"
   cloud_credential_id = rancher2_cloud_credential.aws_credential.id
   amazonec2_config {
-    ami                  = data.aws_ami.ubuntu.id
-    instance_type        = var.worker_instance_type
-    http_endpoint        = "enabled"
-    http_tokens          = "optional"
-    insecure_transport   = false
-    region               = var.region
-    security_group       = ["rancher-default-sg"]
-    subnet_id            = module.infrastructure.public_subnets[0].id # pass the private/public  subnets id from main
-    vpc_id               = module.infrastructure.id             # pass this vpc id from main
-    zone                 = "a"
+    ami                = data.aws_ami.ubuntu.id
+    instance_type      = var.worker_instance_type
+    http_endpoint      = "enabled"
+    http_tokens        = "optional"
+    insecure_transport = false
+    region             = var.region
+    security_group     = ["rancher-default-sg"]
+    subnet_id          = module.infrastructure.public_subnets[0].id # pass the private/public  subnets id from main
+    vpc_id             = module.infrastructure.id                   # pass this vpc id from main
+    zone               = "a"
     /* private_address_only  = true */
     iam_instance_profile = module.global-cluster.instance_profile
   }
@@ -105,7 +105,7 @@ resource "rancher2_cluster" "cluster" {
     cloud_provider {
       name = "aws"
     }
-     network {
+    network {
       plugin = "canal"
     }
     kubernetes_version = var.k8version

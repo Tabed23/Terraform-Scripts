@@ -39,4 +39,4 @@ rancher_domain = "rancher.iamedem.name"
 
 api_url = "https://rancher.iamedem.name"
 
-private_key_path= "./private_key"
+private_key_path = "./private_key"

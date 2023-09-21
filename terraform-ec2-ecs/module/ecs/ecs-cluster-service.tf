@@ -20,5 +20,5 @@ resource "aws_ecs_service" "hello_world" {
     container_port   = 80
   }
 
-  depends_on = [aws_lb_target_group.my-target-group, aws_ecs_cluster.main , aws_ecs_task_definition.app]
+  depends_on = [aws_lb_target_group.my-target-group, aws_ecs_cluster.main, aws_ecs_task_definition.app]
 }

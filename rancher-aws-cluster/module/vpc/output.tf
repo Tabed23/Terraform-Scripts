@@ -11,7 +11,7 @@ output "private_subnets" {
 }
 
 output "bastion_sg" {
-    value= "${aws_security_group.ssh-http-sg.id}"
+  value = aws_security_group.ssh-http-sg.id
 }
 
 

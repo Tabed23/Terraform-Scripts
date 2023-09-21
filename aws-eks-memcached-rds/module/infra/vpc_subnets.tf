@@ -6,10 +6,10 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name                              = "${var.env}-${element(var.availability_zones, count.index)}-public"
-    Env                               = var.env
+    Name                                        = "${var.env}-${element(var.availability_zones, count.index)}-public"
+    Env                                         = var.env
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
-    "kubernetes.io/role/internal-elb" = 1
+    "kubernetes.io/role/internal-elb"           = 1
   }
 }
 
@@ -22,9 +22,9 @@ resource "aws_subnet" "private" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name                              = "${var.env}-${element(var.availability_zones, count.index)}-private"
-    Env                               = var.env
+    Name                                        = "${var.env}-${element(var.availability_zones, count.index)}-private"
+    Env                                         = var.env
     "kubernetes.io/cluster/${var.cluster_name}" = "owned"
-    "kubernetes.io/role/internal-elb" = 1
+    "kubernetes.io/role/internal-elb"           = 1
   }
 }

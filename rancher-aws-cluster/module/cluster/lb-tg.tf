@@ -4,68 +4,68 @@ data "aws_acm_certificate" "issued" {
   statuses = ["ISSUED"]
 }
 resource "aws_lb_target_group" "target-group" {
-    depends_on=[aws_instance.rancher_server, data.aws_acm_certificate.issued]
-     vpc_id = var.vpc_id
-    name = var.target_group_name
-    port = 80
-    protocol = "HTTP"
-    target_type = "instance" # ip
-   
-   health_check {
-        interval = 10
-        path = "/healthz"
-        protocol = "HTTP"
-        timeout = 8
-        healthy_threshold = 2
-        unhealthy_threshold = 7
-    }
+  depends_on  = [aws_instance.rancher_server, data.aws_acm_certificate.issued]
+  vpc_id      = var.vpc_id
+  name        = var.target_group_name
+  port        = 80
+  protocol    = "HTTP"
+  target_type = "instance" # ip
+
+  health_check {
+    interval            = 10
+    path                = "/healthz"
+    protocol            = "HTTP"
+    timeout             = 8
+    healthy_threshold   = 2
+    unhealthy_threshold = 7
+  }
 }
 
 resource "aws_alb_target_group_attachment" "attach_to_ec2" {
-    depends_on=[aws_instance.rancher_server, data.aws_acm_certificate.issued]
-    count= length(aws_instance.rancher_server)
-    target_group_arn = aws_lb_target_group.target-group.arn
-    target_id = element(aws_instance.rancher_server.*.id, count.index)
-    port             = 80
+  depends_on       = [aws_instance.rancher_server, data.aws_acm_certificate.issued]
+  count            = length(aws_instance.rancher_server)
+  target_group_arn = aws_lb_target_group.target-group.arn
+  target_id        = element(aws_instance.rancher_server.*.id, count.index)
+  port             = 80
 }
 
 resource "aws_lb" "alb" {
-    depends_on=[aws_instance.rancher_server, data.aws_acm_certificate.issued]
-    name = var.load_balancer_name
-    internal = false
-    security_groups = [var.ec2sg]
+  depends_on      = [aws_instance.rancher_server, data.aws_acm_certificate.issued]
+  name            = var.load_balancer_name
+  internal        = false
+  security_groups = [var.ec2sg]
 
-    subnets = var.public_subnet_id.*.id
+  subnets = var.public_subnet_id.*.id
 
-    ip_address_type = "ipv4"
-    load_balancer_type = "application"
+  ip_address_type    = "ipv4"
+  load_balancer_type = "application"
 }
 
 resource "aws_lb_listener" "alb_listener" {
-    depends_on=[aws_instance.rancher_server, data.aws_acm_certificate.issued]
-    load_balancer_arn = aws_lb.alb.arn
-    port = 80
-    protocol = "HTTP"
-    # default_action  {
-    #     type = "forward"
-    #     target_group_arn = aws_lb_target_group.target-group.arn
-    # }
+  depends_on        = [aws_instance.rancher_server, data.aws_acm_certificate.issued]
+  load_balancer_arn = aws_lb.alb.arn
+  port              = 80
+  protocol          = "HTTP"
+  # default_action  {
+  #     type = "forward"
+  #     target_group_arn = aws_lb_target_group.target-group.arn
+  # }
 
-    default_action  {
-        type = "redirect"
-        target_group_arn = aws_lb_target_group.target-group.arn
-        redirect {
-            port        = 443
-            protocol    = "HTTPS"
-            status_code = "HTTP_301"
-        }
+  default_action {
+    type             = "redirect"
+    target_group_arn = aws_lb_target_group.target-group.arn
+    redirect {
+      port        = 443
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
     }
-} 
+  }
+}
 
 
 # Redirect traffic to target group
 resource "aws_alb_listener" "https" {
-#   depends_on=[aws_instance.rancher_server, data.aws_acm_certificate.issued]
+  #   depends_on=[aws_instance.rancher_server, data.aws_acm_certificate.issued]
   load_balancer_arn = aws_lb.alb.id
   port              = 443
   protocol          = "HTTPS"
@@ -80,10 +80,10 @@ resource "aws_alb_listener" "https" {
 }
 
 resource "aws_route53_record" "record" {
-    depends_on=[aws_lb.alb]
-  zone_id =  var.zone_id # Replace with your zone ID
-  name    = var.rancher_domain # Replace with your subdomain, Note: not valid with "apex" domains, e.g. example.com
-  type    = "CNAME"
-  ttl     = "60"
-  records = [aws_lb.alb.dns_name]
+  depends_on = [aws_lb.alb]
+  zone_id    = var.zone_id        # Replace with your zone ID
+  name       = var.rancher_domain # Replace with your subdomain, Note: not valid with "apex" domains, e.g. example.com
+  type       = "CNAME"
+  ttl        = "60"
+  records    = [aws_lb.alb.dns_name]
 }

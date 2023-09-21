@@ -5,9 +5,9 @@ resource "aws_subnet" "public_sn1" {
   map_public_ip_on_launch = true
   # A map of tags to assign to the resource.
   tags = {
-    Name                               = "public-eu-central-1a"
+    Name                              = "public-eu-central-1a"
     "kubernetes.io/cluster/FitScrypt" = "shared"
-    "kubernetes.io/role/internal-elb"  = 1
+    "kubernetes.io/role/internal-elb" = 1
   }
 }
 
@@ -19,9 +19,9 @@ resource "aws_subnet" "private_sn1" {
   availability_zone = "eu-central-1b"
   # A map of tags to assign to the resource.
   tags = {
-    Name                               = "private-eu-central-1b"
+    Name                              = "private-eu-central-1b"
     "kubernetes.io/cluster/FitScrypt" = "shared"
-    "kubernetes.io/role/internal-elb"  = 1
+    "kubernetes.io/role/internal-elb" = 1
   }
 }
 
@@ -32,9 +32,9 @@ resource "aws_subnet" "private_sn2" {
 
   # A map of tags to assign to the resource.
   tags = {
-    Name                               = "private-eu-central-1c"
+    Name                              = "private-eu-central-1c"
     "kubernetes.io/cluster/FitScrypt" = "shared"
-    "kubernetes.io/role/internal-elb"  = 1
+    "kubernetes.io/role/internal-elb" = 1
   }
 }
 

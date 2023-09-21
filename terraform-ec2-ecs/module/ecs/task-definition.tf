@@ -1,12 +1,12 @@
- resource "aws_ecs_task_definition" "app" {
-    family = var.task_definition_name
-    network_mode = "awsvpc"
-    execution_role_arn= aws_iam_role.ecs_task_execution_role.arn
-    requires_compatibilities = ["FARGATE"]
-    cpu = var.td_cpu
-    memory = var.td_memory
-    depends_on= [aws_ecr_repository.demo-repository]
- container_definitions = <<DEFINITION
+resource "aws_ecs_task_definition" "app" {
+  family                   = var.task_definition_name
+  network_mode             = "awsvpc"
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = var.td_cpu
+  memory                   = var.td_memory
+  depends_on               = [aws_ecr_repository.demo-repository]
+  container_definitions    = <<DEFINITION
  [
     {
       "name" : "${var.containername}",

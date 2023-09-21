@@ -66,7 +66,7 @@ variable "private_key" {
 
 
 variable "api_url" {
-  type = string
+  type    = string
   default = "http://rancher.your_domain"
 }
 
@@ -74,14 +74,14 @@ variable "cluster_name" {
   type    = string
   default = "rks_cluste"
 }
-variable "rancher_instance_type" { }
+variable "rancher_instance_type" {}
 
 variable "access_key" {
-  type = string
+  type    = string
   default = "you access_key"
 }
 
 variable "secret_key" {
-  type = string
+  type    = string
   default = "you secret_key"
 }

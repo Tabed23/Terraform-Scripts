@@ -31,22 +31,22 @@ module "cluster" {
   depends_on = [
     module.vpc
   ]
-  region               = var.region
-  source               = "./module/cluster"
-  instance_type        = var.instance_type
-  public_subnet_id     = module.vpc.public_subnets
-  private_subnet_id    = module.vpc.private_subnets
-  ec2sg                = module.vpc.bastion_sg
-  availability_zones   = data.aws_availability_zones.available.names[0]
-  keyname              = var.keyname
+  region                = var.region
+  source                = "./module/cluster"
+  instance_type         = var.instance_type
+  public_subnet_id      = module.vpc.public_subnets
+  private_subnet_id     = module.vpc.private_subnets
+  ec2sg                 = module.vpc.bastion_sg
+  availability_zones    = data.aws_availability_zones.available.names[0]
+  keyname               = var.keyname
   rancher_instance_type = var.rancher_instance_type
-  no_of_worker_nodes   = var.no_of_worker_nodes
-  secret_manager_arn   = module.secrets-manager.secret_arns.secret-key
-  privatekey           = module.cluster.privatekey
-  vpc_id               = module.vpc.id
-  target_group_name    = var.target_group_name
-  load_balancer_name   = var.load_balancer_name
-  domain_name          = var.domain_name
+  no_of_worker_nodes    = var.no_of_worker_nodes
+  secret_manager_arn    = module.secrets-manager.secret_arns.secret-key
+  privatekey            = module.cluster.privatekey
+  vpc_id                = module.vpc.id
+  target_group_name     = var.target_group_name
+  load_balancer_name    = var.load_balancer_name
+  domain_name           = var.domain_name
 }
 
 module "secrets-manager" {

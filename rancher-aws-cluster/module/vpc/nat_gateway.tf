@@ -1,6 +1,6 @@
 # elastic ip for the nat gateway
 resource "aws_eip" "nat_eip" {
-  vpc        = true
+  vpc = true
 }
 
 # Nat gateway for the private subnets

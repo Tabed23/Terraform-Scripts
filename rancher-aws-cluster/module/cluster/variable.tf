@@ -30,11 +30,11 @@ variable "load_balancer_name" {}
 variable "domain_name" {}
 
 variable "zone_id" {
-  type = string
+  type    = string
   default = "your aws zone id"
 }
 
 variable "rancher_domain" {
-    type = string
+  type    = string
   default = "your aws rancher domain"
 }

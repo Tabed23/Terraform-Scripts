@@ -43,7 +43,7 @@
 #     Name = "worker-${count.index}"
 #   }
 # }
- 
+
 # resource "aws_instance" "master_node" {
 #     depends_on = [aws_instance.bastion_host]
 

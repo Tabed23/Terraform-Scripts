@@ -9,7 +9,7 @@ resource "aws_vpc" "vpc" {
 
 
 #------------------------------------------------------------------------------------------------
-                                        # Public subnets
+# Public subnets
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.vpc.id
   count                   = length(var.public_subnets_cidr)
@@ -23,7 +23,7 @@ resource "aws_subnet" "public" {
   }
 }
 
-                                          # Private subnets
+# Private subnets
 resource "aws_subnet" "private" {
   vpc_id                  = aws_vpc.vpc.id
   count                   = length(var.private_subnets_cidr)

@@ -3,24 +3,24 @@ data "aws_availability_zones" "available" {
 }
 
 output "availability_zones" {
-    value= data.aws_availability_zones.available.names
+  value = data.aws_availability_zones.available.names
 }
 
 data "aws_ami" "ubuntu" {
 
-    most_recent = true
+  most_recent = true
 
-    filter {
-        name   = "name"
-        values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-    }
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
 
-    filter {
-        name = "virtualization-type"
-        values = ["hvm"]
-    }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
 
-    owners = ["099720109477"]
+  owners = ["099720109477"]
 }
 
 output "ami_ubuntu" {
@@ -40,14 +40,14 @@ output "ami_ubuntu" {
     value = module.ecs.iam-role-ARN
 } 
  */
- output "vpc_id" {
-    value = module.vpc.vpc_id
-} 
+output "vpc_id" {
+  value = module.vpc.vpc_id
+}
 
 output "public_subnets" {
-    value= module.vpc.public_subnets
+  value = module.vpc.public_subnets
 }
 
 output "private_subnets" {
-    value= module.vpc.private_subnets
+  value = module.vpc.private_subnets
 }

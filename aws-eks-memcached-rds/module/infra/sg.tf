@@ -51,7 +51,7 @@ resource "aws_security_group" "rds-sg" {
   name        = "rds-sg"
   description = "rds securtiy group for"
   vpc_id      = aws_vpc.vpc.id
-  depends_on  = [var.rds_sg] 
+  depends_on  = [var.rds_sg]
 
   ingress {
     from_port       = "0"

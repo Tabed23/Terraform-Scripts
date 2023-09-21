@@ -1,6 +1,6 @@
 resource "aws_instance" "rancher" {
-  depends_on= [var.ig,var.keypair_dependent]
-  ami = data.aws_ami.ubuntu.id
+  depends_on = [var.ig, var.keypair_dependent]
+  ami        = data.aws_ami.ubuntu.id
 
   instance_type = var.instance_type
 

@@ -71,7 +71,7 @@ variable "rancher_domain" {}
 variable "bastion_instance_type" {}
 
 variable "api_url" {
-  type    = string
+  type = string
 
 }
 

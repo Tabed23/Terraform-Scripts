@@ -18,7 +18,7 @@ private_subnets_cidr = ["10.0.2.0/24"]
 env_type = "development"
 
 #bastion host instance
-instance_type = "t2.micro"
+instance_type         = "t2.micro"
 rancher_instance_type = "t2.large"
 #------- BASTIONHOST
 

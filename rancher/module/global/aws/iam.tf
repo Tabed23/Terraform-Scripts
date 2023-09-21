@@ -1,6 +1,6 @@
 resource "aws_iam_role" "this_iam_role" {
-  depends_on= [var.ig]
-  name = "ec2-iam-role"
+  depends_on = [var.ig]
+  name       = "ec2-iam-role"
 
   assume_role_policy = <<EOF
 {
@@ -25,9 +25,9 @@ EOF
 
 
 resource "aws_iam_role_policy" "ec2_secret_manager_policy" {
-  name = "secret_manager_policy"
-  depends_on= [var.ig]
-  role = aws_iam_role.this_iam_role.id
+  name       = "secret_manager_policy"
+  depends_on = [var.ig]
+  role       = aws_iam_role.this_iam_role.id
 
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -83,28 +83,28 @@ resource "aws_iam_role_policy" "ec2_secret_manager_policy" {
 }
 
 resource "aws_iam_instance_profile" "instance_profile" {
-  depends_on= [var.ig]
-  name = "instance_profile"
-  role = aws_iam_role.this_iam_role.name
+  depends_on = [var.ig]
+  name       = "instance_profile"
+  role       = aws_iam_role.this_iam_role.name
 }
 
 resource "aws_iam_role_policy_attachment" "s3_full_access" {
-  depends_on= [var.ig]
+  depends_on = [var.ig]
   role       = aws_iam_role.this_iam_role.id
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
 }
 
 resource "aws_iam_role_policy_attachment" "secret_manager" {
-  depends_on= [var.ig]
+  depends_on = [var.ig]
   role       = aws_iam_role.this_iam_role.id
   policy_arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
 }
 
 
 resource "aws_iam_role_policy" "rancher_master" {
-  depends_on= [var.ig]
-  name = "rancher_master_policy"
-  role = aws_iam_role.this_iam_role.id
+  depends_on = [var.ig]
+  name       = "rancher_master_policy"
+  role       = aws_iam_role.this_iam_role.id
   policy = jsonencode(
     {
       "Version" : "2012-10-17",
@@ -177,16 +177,16 @@ resource "aws_iam_role_policy" "rancher_master" {
 }
 
 resource "aws_iam_instance_profile" "master_profile" {
-  depends_on= [var.ig]
-  name = "master_profile"
-  role = aws_iam_role.this_iam_role.name
+  depends_on = [var.ig]
+  name       = "master_profile"
+  role       = aws_iam_role.this_iam_role.name
 }
 
 
 resource "aws_iam_role_policy" "rancher_worker" {
-  depends_on= [var.ig]
-  name = "rancher_worker_policy"
-  role = aws_iam_role.this_iam_role.id
+  depends_on = [var.ig]
+  name       = "rancher_worker_policy"
+  role       = aws_iam_role.this_iam_role.id
   policy = jsonencode(
     {
       "Version" : "2012-10-17",
@@ -212,7 +212,7 @@ resource "aws_iam_role_policy" "rancher_worker" {
 
 
 resource "aws_iam_instance_profile" "worker_profile" {
-  depends_on= [var.ig]
-  name = "worker_profile"
-  role = aws_iam_role.this_iam_role.name
+  depends_on = [var.ig]
+  name       = "worker_profile"
+  role       = aws_iam_role.this_iam_role.name
 }

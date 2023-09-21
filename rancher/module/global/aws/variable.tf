@@ -14,7 +14,7 @@ variable "rancher_server" {}
 
 variable "rancher_instance_ip" {}
 
-variable "domain_name"{}
+variable "domain_name" {}
 
 variable "bastion_instance_type" {}
 

@@ -15,9 +15,9 @@ output "sg" {
 }
 
 output "ig" {
-  value=aws_internet_gateway.ig
+  value = aws_internet_gateway.ig
 }
 
 output "nat" {
-  value= aws_nat_gateway.nat
+  value = aws_nat_gateway.nat
 }
